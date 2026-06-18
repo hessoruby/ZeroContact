@@ -15,6 +15,8 @@ public class mover : MonoBehaviour
     void Update()
     {
         MovePlayer();
+        teleportback();
+        
 
 
         
@@ -28,6 +30,14 @@ public class mover : MonoBehaviour
         float x = Input.GetAxis("Horizontal") * Time.deltaTime  * MoveSpeed;
         float z = Input.GetAxis("Vertical") * Time.deltaTime * MoveSpeed;
         transform.Translate(x, 0f, z);
+        
+    }
+    void teleportback()
+    {
+        if (transform.position.y < -10f)
+        {
+            transform.position = new Vector3(-7.457f, 0.024f, 14.96f);
+        }
     }
   
 

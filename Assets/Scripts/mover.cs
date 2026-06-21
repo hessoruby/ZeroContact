@@ -36,7 +36,7 @@ public class mover : MonoBehaviour
     {
         if (transform.position.y < -10f)
         {
-            transform.position = new Vector3(-7.457f, 0.024f, 14.96f);
+            transform.position = new Vector3(-7.457f, -0.265, 14.96f);
         }
     }
   

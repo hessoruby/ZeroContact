@@ -1,15 +1,29 @@
+using System.Dynamic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 
 public class ObjectHit : MonoBehaviour
+
 {
-    [SerializeField] Vector3 playerposition;
+    [SerializeField] float crash= 0f;
+   
     void OnCollisionEnter(Collision other)
+
+    {if (other.gameObject.CompareTag("Player")){
+       Invoke("oncrash",crash);
+       
+    }}
+    void oncrash()
     {
-        if(other.gameObject.tag == "Player")
-        {
-            other.transform.position = playerposition;
-        }
+         
+    
+            int activescene = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(activescene);
+             
+            
+
     }
 
 }

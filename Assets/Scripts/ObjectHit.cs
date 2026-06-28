@@ -1,37 +1,28 @@
-using System.Dynamic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-
 public class ObjectHit : MonoBehaviour
-
 {
-    [SerializeField] float crash= 0f;
+    [Header("Crash Settings")]
+    [SerializeField] private float crashDelay = 0f;
 
-
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        if (ShouldRestart(collision))
+        {
+            Invoke(nameof(RestartLevel), crashDelay);
+        }
     }
-   
-    void OnCollisionEnter(Collision other)
 
-    {if (!other.gameObject.CompareTag("Player") && !other.gameObject.CompareTag("finish") ){
-       Invoke("oncrash",crash);
-
-       
-    }}
-    void oncrash()
+    private bool ShouldRestart(Collision collision)
     {
-         
-    
-            int activescene = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(activescene);
-             
-            
-
+        return !collision.gameObject.CompareTag("Player") &&
+               !collision.gameObject.CompareTag("finish");
     }
-   
 
+    private void RestartLevel()
+    {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentScene);
+    }
 }

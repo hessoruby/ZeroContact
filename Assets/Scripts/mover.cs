@@ -1,52 +1,49 @@
-using System.Runtime.InteropServices;
 using UnityEngine;
 
-
-public class mover : MonoBehaviour
+public class Mover : MonoBehaviour
 {
-    // serializefield allows us to change the value of x, y, and z in the inspector without having to change the code
-    [SerializeField]float MoveSpeed = 5f;
-    void Start()
+    [Header("Movement Settings")]
+    [SerializeField] private float moveSpeed = 5f;
+
+    [Header("Respawn Settings")]
+    [SerializeField] private Vector3 spawnPosition = new Vector3(-7.457f, -0.265f, 14.96f);
+    [SerializeField] private float fallLimit = -10f;
+
+    private void Start()
     {
-       PrintInstructions(); 
+        PrintInstructions();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         MovePlayer();
-        teleportback();
-        
-
-
-        
+        CheckIfPlayerFell();
     }
-    void PrintInstructions()
+
+    private void PrintInstructions()
     {
         Debug.Log("Use the arrow keys to move the object around.");
     }
-     void MovePlayer()
+
+    private void MovePlayer()
     {
-        float x = Input.GetAxis("Horizontal") * Time.deltaTime  * MoveSpeed;
-        float z = Input.GetAxis("Vertical") * Time.deltaTime * MoveSpeed;
-        transform.Translate(x, 0f, z);
-        
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput);
+        transform.Translate(movement * moveSpeed * Time.deltaTime);
     }
-    void teleportback()
+
+    private void CheckIfPlayerFell()
     {
-        if (transform.position.y < -10f)
+        if (transform.position.y < fallLimit)
         {
-            transform.position = new Vector3(-7.457f, -0.265f, 14.96f);
+            RespawnPlayer();
         }
     }
-  
 
-
-
-
-
-
-
-
-
+    private void RespawnPlayer()
+    {
+        transform.position = spawnPosition;
+    }
 }

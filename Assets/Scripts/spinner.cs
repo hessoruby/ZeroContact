@@ -1,18 +1,19 @@
 using UnityEngine;
 
-public class spinner : MonoBehaviour
-{ [SerializeField] float x = 0f;
-    [SerializeField] float y = 0f;
-    [SerializeField] float z = 0f;
+public class Spinner : MonoBehaviour
+{
+    [Header("Rotation Speed (Degrees Per Frame)")]
+    [SerializeField] private float xRotation = 0f;
+    [SerializeField] private float yRotation = 0f;
+    [SerializeField] private float zRotation = 0f;
 
-    void Start()
+    private void Update()
     {
-        
+        RotateObject();
     }
 
-    void Update()
+    private void RotateObject()
     {
-        transform.Rotate(x, y, z);
-        
+        transform.Rotate(xRotation, yRotation, zRotation);
     }
 }

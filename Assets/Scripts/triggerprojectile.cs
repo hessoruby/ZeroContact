@@ -1,21 +1,24 @@
 using UnityEngine;
 
-public class triggerprojectile : MonoBehaviour
+public class TriggerProjectile : MonoBehaviour
 {
-    [SerializeField] GameObject projectile;
-    [SerializeField] GameObject projectile1;
-    [SerializeField] GameObject projectile2;
-    [SerializeField] GameObject projectile3;
-   void OnTriggerEnter(Collider other)
-   { if (other.gameObject.tag == "Player")
+    [Header("Projectiles")]
+    [SerializeField] private GameObject[] projectiles;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Player"))
+            return;
+
+        ActivateProjectiles();
+        Destroy(gameObject);
+    }
+
+    private void ActivateProjectiles()
+    {
+        foreach (GameObject projectile in projectiles)
         {
             projectile.SetActive(true);
-            projectile1.SetActive(true);
-            projectile2.SetActive(true);
-            projectile3.SetActive(true);
-            Destroy(gameObject);
-            }
         }
-   }
-   
-
+    }
+}
